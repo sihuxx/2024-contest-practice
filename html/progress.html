@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+  <style>
+    /* @property --num1 {
+      syntax: "<integer>";
+      initial-value: 0;
+      inherits: false;
+    } 
+    .div {
+      counter-reset: num var(--num);
+      font: 800 40px system-ui;
+    }
+    .div::after {
+      content: counter(num);
+    }
+    
+    @keyframes counter {
+      from {
+        --num: 0;
+      }
+      to {
+        --num: attr(data-max);
+      }
+    } */
+    * { box-sizing: border-box; padding: 0; margin: 0; }
+    p {margin: 0; padding: 0;}
+    html, body {height: 100%;}
+    body{display: grid; place-items: center;}
+    .barWrapper {position: relative; display: flex; flex-direction: column;  width: 600px; gap: 10px; }
+    .barWrapper .bar {
+      position: relative;
+      height: 16px; background-color: #ffc201; 
+      animation: bar 1s linear forwards; 
+      border-radius: 0px 50px 50px 0;
+    }
+    .barWrapper .barCont:nth-child(3) .bar {background-color: #fe5417;}
+    .barWrapper .bar::before {content: attr(data-year); position: absolute; font-size: 0.75rem; color: white; left: 3px; top: 50%; transform: translateY(-50%);}
+    @keyframes bar {
+      from {width: 0px;}
+    }
+    .barWrapper .barCont { width: 100%; display: flex; flex-direction: column; border-radius: 0px 50px 50px 0}
+    .barWrapper .barCont {background-color: #f9f9f9;}
+
+    .graph1 .barWrapper .barCont:nth-child(1) .bar { width: calc(600 / 2500 * 1320px); }
+    .graph1 .barWrapper .barCont:nth-child(2) .bar { width: calc(600 / 2500 * 1700px); }
+    .graph1 .barWrapper .barCont:nth-child(3) .bar { width: calc(600 / 2500 * 2315px); }
+
+    .graph2 .barWrapper .barCont:nth-child(1) .bar { width: calc(600 / 100 * 30px); }
+    .graph2 .barWrapper .barCont:nth-child(2) .bar { width: calc(600 / 100 * 52px); }
+    .graph2 .barWrapper .barCont:nth-child(3) .bar { width: calc(600 / 100 * 82px); }
+
+    .graph3 .barWrapper .barCont:nth-child(1) .bar { width: calc(600 / 400 * 240px); }
+    .graph3 .barWrapper .barCont:nth-child(2) .bar { width: calc(600 / 400 * 278px); }
+    .graph3 .barWrapper .barCont:nth-child(3) .bar { width: calc(600 / 400 * 325px); }
+
+    .graph4 .barWrapper .barCont:nth-child(1) .bar { width: calc(600 / 1000 * 521px); }
+    .graph4 .barWrapper .barCont:nth-child(2) .bar { width: calc(600 / 1000 * 716px); }
+    .graph4 .barWrapper .barCont:nth-child(3) .bar { width: calc(600 / 1000 * 842px); }
+
+    .cont {width: 1420px;
+      display: flex; gap: 5rem; justify-content: space-between; align-items: center;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="cont">
+  <div class="graph1">
+    <p class="text-secondary">억원</p>
+    <p class="fs-4 pb-3">매출액</p>
+    <div class="barWrapper">
+      <div class="barCont"><div data-year="2021" data-max="123" class="bar bg-gradient"></div></div>
+      <div class="barCont"><div data-year="2022" data-max="123" class="bar bg-gradient"></div></div>
+      <div class="barCont"><div data-year="2023" data-max="123" class="bar bg-gradient"></div></div>
+    </div>
+  </div>
+  <div class="graph2">
+    <p class="text-secondary">회</p>
+    <p class="fs-4 pb-3">축제횟수</p>
+    <div class="barWrapper">
+      <div class="barCont"><div data-year="2021" data-max="123" class="bar bg-gradient"></div></div>
+      <div class="barCont"><div data-year="2022" data-max="123" class="bar bg-gradient"></div></div>
+      <div class="barCont"><div data-year="2023" data-max="123" class="bar bg-gradient"></div></div>
+    </div>
+  </div>
+  <div class="graph3">
+    <p class="text-secondary">만명</p>
+    <p class="fs-4 pb-3">방문객</p>
+    <div class="barWrapper">
+      <div class="barCont"><div data-year="2021" data-max="123" class="bar bg-gradient"></div></div>
+      <div class="barCont"><div data-year="2022" data-max="123" class="bar bg-gradient"></div></div>
+      <div class="barCont"><div data-year="2023" data-max="123" class="bar bg-gradient"></div></div>
+    </div>
+  </div>
+  <div class="graph4">
+    <p class="text-secondary">억원</p>
+    <p class="fs-4 pb-3">카드소비액</p>
+    <div class="barWrapper">
+      <div class="barCont"><div data-year="2021" data-max="123" class="bar bg-gradient"></div></div>
+      <div class="barCont"><div data-year="2022" data-max="123" class="bar bg-gradient"></div></div>
+      <div class="barCont"><div data-year="2023" data-max="123" class="bar bg-gradient"></div></div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

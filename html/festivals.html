@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/Bstyles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="shadow py-4">
+      <div class="cont flex i-center gap-5">
+               <a href="./index.html" class="fs-3">Universal Festival</a>
+        <ul class="flex">
+          <li><a class="p-2 fs-5 fw-bold" href="./progress.html">문화관광축제</a></li>
+          <li><a class="p-2 fs-5 fw-bold" href="./festivals.html">전국 축제</a></li>
+          <li><a class="p-2 fs-5 fw-bold" href="./sub.html">축제 안내</a></li>
+          <li><a class="p-2 fs-5 fw-bold" href="./panorama.html">축제 탐방</a></li>
+        </ul>
+        <div class="ms-auto flex c gap-3"><button class="btn btn-primary">로그인</button><button class="btn btn-primary">회원가입</button></div> 
+      </div>
+    </header>
+    <main class="flex-center">  
+      <aside class="flex-col gap-3 p-3 bg-white position-fixed z-3 start-0 top-0 border-end transition" style="min-height: 100dvh; max-width: 450px; min-width: 300px; transform: translate(-100%) ">
+        <form action="" class="flex gap-3">
+          <input type="text" class="flex-1 form-control" name="input">
+          <button class="btn-primary btn">검색</button>
+        </form>
+        <div class="types flex gap-2 mb-5">
+
+        </div>
+        <div class="festivals overflow-auto flex-col gap-3" style="height: 750px">
+          
+        </div>
+
+        <div class="toggle abs start-100 top-50 border border-dark pointer border-start-0 px-2 py-3 rounded-1">sf</div>
+      </aside>
+      <div class="canvasWrapper">
+        <canvas id="mapCanvas"></canvas>
+        <canvas id="circleCanvas"></canvas>
+        <div class="popup"></div>
+      </div>
+    </main>
+    <footer class="shadow text-center py-5">
+      <div class="cont">FOOTER</div>
+    </footer>
+
+    <script src="./vendor/jquery-3.7.1.js"></script>
+    <script src="./js/App.js"></script>
+    <script>new App()</script>
+  </div>
+</body>
+</html>

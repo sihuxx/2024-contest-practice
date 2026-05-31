@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_2" data-name="레이어 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 10px;
+        stroke: #fe5417;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="_레이어_1-2" data-name="레이어 1">
+    <polygon class="cls-2" points="700 700 0 700 0 0 700 0 700 206.12 700 700"/>
+    <path class="cls-1" id="car" d="m700,206.12l-72.31-22.54s-50.27,52.01-58.94-22.54l-100.55-41.61-37.27,115.28-80.93,29.47-43.88-57.21-141.28,163.82-39,9.53-10.4,140.42-29.47,13-57.21,85.81"/>
+  </g>
+</svg>

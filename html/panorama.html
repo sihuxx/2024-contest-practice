@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./vendor/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/Bstyles.css">
+  <style>
+    .view {
+      overflow: hidden;
+      perspective: 480px;
+      display: grid;
+      place-items: center;
+      height: 100dvh;
+    }
+    .cube {
+      width: 800px;
+      height: 800px;
+      position: absolute;
+      transform-style: preserve-3d;
+      transform: translateZ(480px) rotateX(0deg) rotateY(0deg);
+    }
+    .cube > div {
+      user-select: none;
+      inset: 0;
+      position: absolute;
+      background-size: cover;
+    }
+    
+    .cube .cube-front {
+      transform: translateZ(-399px);
+    }
+    .cube .cube-back {
+      transform: rotateY(180deg) translateZ(-399px);
+    }
+    .cube .cube-left {
+      transform: rotateY(90deg) translateZ(-399px);
+    }
+    .cube .cube-right {
+      transform: rotateY(-90deg) translateZ(-399px);
+    }
+    .cube .cube-top {
+      transform: rotateX(-90deg) translateZ(-399px);
+    }
+    .cube .cube-bottom {
+      transform: rotateX(90deg) translateZ(-399px);
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="view">
+    <div class="cube">
+      <div class="cube-front" style="background-image:url(./파노라마/2024\ 웰컴대학로/front.jpg)"></div>
+      <div class="cube-back" style="background-image:url(./파노라마/2024\ 웰컴대학로/back.jpg)"></div>
+      <div class="cube-left" style="background-image:url(./파노라마/2024\ 웰컴대학로/left.jpg)"></div>
+      <div class="cube-right" style="background-image:url(./파노라마/2024\ 웰컴대학로/right.jpg)"></div>
+      <div class="cube-top" style="background-image:url(./파노라마/2024\ 웰컴대학로/top.jpg)"></div>
+      <div class="cube-bottom" style="background-image:url(./파노라마/2024\ 웰컴대학로/bottom.jpg)"></div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-3 p-3 position-fixed z-3 start-0 top-0">
+    <a class="btn btn-primary" href="./festivals.html">돌아가기</a>
+    <button class="btn btn-light zoomLvl">1배</button>
+  </div>
+
+  <div class="ctrls d-flex gap-3 bg-white rounded-2 position-fixed z-3 translate-middle start-50 bottom-0 p-3">
+    <button data-bs-target="#m" data-bs-toggle="modal" class="btn btn-success map">지도</button>
+    <button class="btn btn-primary left">왼쪽</button>
+    <button class="btn btn-primary right">오른쪽</button>
+    <button class="btn btn-primary up">위</button>
+    <button class="btn btn-primary down">아래</button>
+    <button class="btn btn-dark zoomIn">확대</button>
+    <button class="btn btn-dark zoomOut">축소</button>
+    <button class="btn btn-warning fullscreen">전제화면</button>
+  </div>
+
+  <div id="m" class="modal fade">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>지도</h3>
+          <button class="btn btn-close" data-bs-dismiss="modal"></button> 
+        </div>
+        <div class="modal-body flex-center">
+          <div class="canvasWrapper rel">
+            <canvas></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/App.js"></script>
+  <script src="./vendor/bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+  <script src="./vendor/jquery-3.7.1.js"></script>
+  <script src="./js/script.js"></script>
+</body>
+</html>
