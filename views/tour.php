@@ -42,12 +42,13 @@ $festivals = db::fetchAll("select * from festivals where end_date >= '$today'");
         const dateInput = $("input[name='date']");
 
         dateInput.onclick = () => {
-            if (!selected.value) {
+            if (!select.value) {
                 alert("축제를 선택해주세요");
                 return;
             }
         }
 
+        dateInput.value = '';
         dateInput.min = selected.start_date;
         dateInput.max = selected.end_date;
     }
