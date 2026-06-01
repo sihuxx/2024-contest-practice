@@ -1,7 +1,7 @@
 <?php
 $user = ss();
 $festivals = db::fetchAll("select * from festivals order by end_date desc");
-$tours = db::fetchAll("select * from tours where status = 0");
+$tours = db::fetchAll("select * from tours ");
 ?>
 
 <main class="myPage-content">
@@ -37,12 +37,22 @@ $tours = db::fetchAll("select * from tours where status = 0");
               <p class="bold"><?= $tour->title ?></p>
               <p>탐방할 축제: <?= $tour->festival ?></p>
               <p>탐방 날짜: <?= $tour->date ?></p>
-              <p>최대 모집 인원: <?= $tour->max_people ?></p>
-              <form method="POST" class="btns">
+              <p>최대 모집 인원: <?= $tour->max_people ?>명</p>
+              <?php if($tour->status == 0) { ?>
+                <form method="POST" class="btns">
                 <input type="hidden" name="idx" value="<?= $tour->idx ?>">
                 <button formaction="/tourAccept">수락</button>
                 <button formaction="/tourReject">거절</button>
               </form>
+              <?php } else if($tour->status == 1) { ?>
+                <?php if($tour->isAccept == 1) { ?>
+                  <p class="accept-msg">수락되었습니다.</p>
+                <?php } else { ?>
+                  <p class="reject-msg">거절되었습니다.</p>
+                <?php } ?>
+              <?php } else if(date("Y-m-d") > $tour->date) { ?>
+              <p>탐방이 완료되었습니다</p>
+              <?php } ?>
             </div>
             <div class="profile">
               신청자:

@@ -382,3 +382,5 @@ footer {background-color: #fe5417; border-top-right-radius: 45px; color: white;}
 .tour-list .tour .tour-info {display: flex;flex-direction: column;gap: 5px;}
 .tour-list .tour .profile-info {display: flex;align-items: center;gap: 10px;}
 .btns {display: flex;gap: 5px;}
+.accept-msg {color: #31881b;}
+.reject-msg {color: #ff2e2e;}

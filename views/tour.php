@@ -12,13 +12,16 @@ $user = ss()
     <button onclick="controlModal()">탐방 모집</button>
     <div class="tour-list">
         <?php foreach ($tours as $tour) {
-            $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'"); ?>
+            $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'"); 
+            $tour_recruits = db::fetchAll("select * from recruits where tour_idx = '$tour->idx'");
+            $festival = db::fetch("select * from festivals where idx = '$tour->festival'")
+            ?>
             <div class="tour" onclick="location.href = '/festival/<?= $tour->festival ?>'" style="cursor: pointer;">
                 <div class="tour-info">
                     <p class="bold"><?= $tour->title ?></p>
-                    <p>탐방할 축제: <?= $tour->festival ?></p>
+                    <p>탐방할 축제: <?= $festival->name ?></p>
                     <p>탐방 날짜: <?= $tour->date ?></p>
-                    <p>모집 인원: <?= $tour->people ?>/<?= $tour->max_people ?></p>
+                    <p>모집 인원: <?= count($tour_recruits) + 1 ?>/<?= $tour->max_people ?></p>
                     <form method="POST" class="btns">
                         <input type="hidden" name="tour_idx" value="<?= $tour->idx ?>">
                         <input type="hidden" name="user_idx" value="<?= $user->idx ?>">
