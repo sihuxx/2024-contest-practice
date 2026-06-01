@@ -15,6 +15,9 @@ get("/progress", function () {
 get("/sub", function () {
   views("sub");
 });
+get("/myPage", function () {
+  views("myPage");
+});
 get("/festivals", function () {
   views("festival/festivals");
 });
@@ -24,7 +27,7 @@ get("/festival/{idx}", function ($idx) {
 get("/login", function () {
   views("/auth/login");
 });
-get("/tour", function() {
+get("/tour", function () {
   views("tour");
 });
 get("/register", function () {
@@ -60,4 +63,35 @@ post("/signIn", function () {
 get("/logout", function () {
   session_destroy();
   move("/", '로그아웃 성공');
+});
+post("/addTour", function () {
+  extract($_POST);
+  db::exec("insert into tours(title, festival, date, max_people, people, user_idx) values ('$title', '$festival', '$date', '$max_people', 1, '$user_idx')");
+  move("/tour", "탐방이 성공적으로 모집되었습니다");
+});
+post('/addFestival', function () {
+  extract($_POST);
+  $file = $_FILES["file"];
+  $path = '/assets/festivals/' . $file["name"];
+  if (isset($file["tmp_name"]) && move_uploaded_file($file["tmp_name"], ".$path")) {
+    db::exec("insert into festivals(image, name, start_date, end_date, address) values ('$path', '$name', '$start_date', '$end_date', '$address')");
+    move("/myPage", "축제가 성공적으로 추가되었습니다");
+  } else {
+    back("축제 추가에 실패하였습니다");
+  }
+});
+post("/tourAccept", function () {
+  extract($_POST);
+  db::exec("update tours set status = 1 where idx = '$idx'");
+  move("/myPage", "탐방이 수락되었습니다");
+});
+post("/tourReject", function () {
+  extract($_POST);
+  db::exec("delete from tours where idx = '$idx'");
+  move("/myPage", "탐방이 거절되었습니다");
+});
+post("/tourApply", function() {
+  extract($_POST);
+  db::exec("insert into recruits(tour_idx, user_idx) values ('$tour_idx', '$user_idx')");
+  move("/tour", "탐방에 신청을 완료했습니다");
 });

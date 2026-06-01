@@ -348,7 +348,7 @@ footer {background-color: #fe5417; border-top-right-radius: 45px; color: white;}
 
 /* 축제 안내 */
 .guide-content {padding: 200px 0;width: 100%;display: flex;justify-content: center;align-items: center;flex-direction: column;}
-.guide-content .festival-grid {display: grid; grid-template-columns: repeat(4, 1fr);gap: 20px;width: 1300px;}
+.festival-grid {display: grid; grid-template-columns: repeat(4, 1fr);gap: 20px;width: 1300px;}
 .festival-grid .festival {cursor: pointer; display: flex;flex-direction: column;gap: 5px; width: 100%;height: 100%;padding: 20px;border: 1px solid #ccc;}
 .bold {font-weight: bold;font-size: 18px;color: black;}
 .festival p {color: #333;}
@@ -361,11 +361,24 @@ footer {background-color: #fe5417; border-top-right-radius: 45px; color: white;}
 .festival-content .detail-content {border: 1px solid #ccc;}
 
 /* 탐방 */
-.tour-content {padding: 200px 0;display: flex;flex-direction: column;align-items: center;}
-.tour-modal {gap: 10px;background-color: white;border: 1px solid black;padding: 20px; align-items: center;justify-content: center; display: none;flex-direction: column;position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);}
-.tour-modal form {display: flex;flex-direction: column;gap: 10px;}
-.tour-modal input, .tour-modal select {width: 400px;padding: 5px;}
-.tour-modal label {display: flex;flex-direction: column;}
-.tour-modal-header {width: 100%;display: flex;justify-content: end;align-items: center;}
-.tour-content button{padding: 5px 10px;border: 1px solid black;}
-.tour-modal.toggle {display: flex !important;}
+.tour-content {padding: 50px 0;display: flex;flex-direction: column;align-items: center;gap: 30px;}
+.default-modal {gap: 10px;background-color: white;border: 1px solid black;padding: 20px; align-items: center;justify-content: center; display: none;flex-direction: column;position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);}
+.default-modal form {display: flex;flex-direction: column;gap: 10px;}
+.default-modal input, .default-modal select {width: 400px;padding: 5px;}
+.default-modal label {display: flex;flex-direction: column;}
+.default-modal-header {width: 100%;display: flex;justify-content: end;align-items: center;}
+ button{padding: 5px 10px;border: 1px solid black;}
+.default-modal.toggle {display: flex !important;}
+
+/* 마이 페이지 */
+.myPage-content {padding: 50px 0;display: flex;flex-direction: column;align-items: center;justify-content: center;}
+.myPage-content > div {width: 1300px;display: flex;justify-content: center;align-items: center;flex-direction: column;gap: 30px;}
+.title-text {margin-top: 100px;width: 1300px;padding: 20px 0;}
+.tour-list {width: 1300px;display: flex;flex-direction: column;gap: 20px;}
+.tour-list .tour {width: 100%;padding: 20px;border: 1px solid #ccc;display: flex;gap: 5px;justify-content: space-between;align-items: center;}
+.tour-list .tour .profile {width: fit-content; padding: 20px;border: 1px solid #ccc; display: flex;gap: 10px;flex-direction: column;}
+.tour-list .tour .profile .info {display: flex;flex-direction: column;}
+.tour-list .tour .profile img {width: 80px;height: 80px;border-radius: 10px;}
+.tour-list .tour .tour-info {display: flex;flex-direction: column;gap: 5px;}
+.tour-list .tour .profile-info {display: flex;align-items: center;gap: 10px;}
+.btns {display: flex;gap: 5px;}
