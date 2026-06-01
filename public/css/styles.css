@@ -349,13 +349,14 @@ footer {background-color: #fe5417; border-top-right-radius: 45px; color: white;}
 /* 축제 안내 */
 .guide-content {padding: 200px 0;width: 100%;display: flex;justify-content: center;align-items: center;flex-direction: column;}
 .festival-grid {display: grid; grid-template-columns: repeat(4, 1fr);gap: 20px;width: 1300px;}
+.festival-content > div {width: 1300px;}
+.festival-content .detail-content {width: 1300px;padding: 20px;}
 .festival-grid .festival {cursor: pointer; display: flex;flex-direction: column;gap: 5px; width: 100%;height: 100%;padding: 20px;border: 1px solid #ccc;}
 .bold {font-weight: bold;font-size: 18px;color: black;}
 .festival p {color: #333;}
 
 /* 축제 상세 페이지 */
 .festival-content {flex-direction: column; padding: 200px 0;display: flex;gap: 20px;justify-content: center;align-items: center;}
-.festival-content div {width: 1000px;gap: 5px;display: flex;flex-direction: column; padding: 20px;}
 .festival-content p {color: #333;font-size: 18px;}
 .festival-content .detail-content img {height: 400px;}
 .festival-content .detail-content {border: 1px solid #ccc;}
