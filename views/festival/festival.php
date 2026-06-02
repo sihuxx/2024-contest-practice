@@ -23,7 +23,7 @@ $tours = db::fetchAll("select * from tours where festival = '$festival->idx'")
   <div class="tour-list">
     <?php foreach ($tours as $tour) {
       $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'");
-      $tour_recruits = db::fetchAll("select * from recruits where tour_idx = '$tour->idx'");
+      $tour_recruits = db::fetchAll("select * from recruits where tour_idx = '$tour->idx' and status = 1");
       $festival = db::fetch("select * from festivals where idx = '$tour->festival'")
     ?>
       <div class="tour" style="cursor: pointer;">

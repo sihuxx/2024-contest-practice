@@ -31,11 +31,13 @@ $tours = db::fetchAll("select * from tours ");
       </div>
       <div class="tour-list">
         <?php foreach ($tours as $tour) {
-          $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'"); ?>
+          $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'"); 
+          $festival = db::fetch("select * from festivals where idx = '$tour->festival'");
+          ?>
           <div class="tour">
             <div class="tour-info">
               <p class="bold"><?= $tour->title ?></p>
-              <p>탐방할 축제: <?= $tour->festival ?></p>
+              <p>탐방할 축제: <?= $festival->name ?></p>
               <p>탐방 날짜: <?= $tour->date ?></p>
               <p>최대 모집 인원: <?= $tour->max_people ?>명</p>
               <?php if($tour->status == 0) { ?>

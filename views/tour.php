@@ -2,7 +2,7 @@
 $today = "2024-09-01";
 $festivals = db::fetchAll("select * from festivals where end_date >= '$today'");
 $tours = db::fetchAll("select * from tours where status = 1");
-$user = ss()
+$user = ss();
 ?>
 
 <main class="tour-content">
@@ -12,10 +12,10 @@ $user = ss()
     <button onclick="controlModal()">탐방 모집</button>
     <div class="tour-list">
         <?php foreach ($tours as $tour) {
-            $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'"); 
-            $tour_recruits = db::fetchAll("select * from recruits where tour_idx = '$tour->idx'");
+            $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'");
+            $tour_recruits = db::fetchAll("select * from recruits where tour_idx = '$tour->idx' and status = 1");
             $festival = db::fetch("select * from festivals where idx = '$tour->festival'")
-            ?>
+        ?>
             <div class="tour" onclick="location.href = '/festival/<?= $tour->festival ?>'" style="cursor: pointer;">
                 <div class="tour-info">
                     <p class="bold"><?= $tour->title ?></p>
@@ -24,7 +24,7 @@ $user = ss()
                     <p>모집 인원: <?= count($tour_recruits) + 1 ?>/<?= $tour->max_people ?></p>
                     <form method="POST" class="btns">
                         <input type="hidden" name="tour_idx" value="<?= $tour->idx ?>">
-                        <input type="hidden" name="user_idx" value="<?= $user->idx ?>">
+                        <input type="hidden" name="user_idx" value="<?= $user->idx ?? "" ?>">
                         <button formaction="/tourApply">가입 신청</button>
                     </form>
                 </div>

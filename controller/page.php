@@ -106,3 +106,57 @@ post("/tourApply", function () {
   db::exec("insert into recruits(tour_idx, user_idx) values ('$tour_idx', '$user_idx')");
   move("/tour", "탐방에 신청을 완료했습니다");
 });
+
+
+get('/test', function(){
+
+
+  // '2026-06-2'
+  // Y-m-d H:i:s
+  $계약해지날 = '2025-12-01 00:00:01';
+
+  $second = 1;
+  $minute = $second * 60;
+  $hour = $minute * 60;
+  $day = $hour * 24;
+
+
+
+  $startTime = '2026-06-02 19:00:00';
+  $endTime = '2026-06-02 21:00:00';
+  $inputStartTime = 16;
+  $inputEndTime = 18;
+
+  $otherReservationStartTime = 17;
+  $otherReservationEndTime = 19;
+
+  $now = time();
+
+  
+  // $inputStartTime < $otherReservationStartTime && $inputStartTime > $otherReservationEndTime
+  // ||
+  // $inputStartTime < $otherReservationStartTime && $inputStartTime > $otherReservationEndTime
+
+  
+  // if () {
+  //   echo "예약 가능";
+  // } else {
+  //   echo "꺼저";
+  // }
+
+  // date()
+  // dateTime()
+  // time()
+  // strtotime()
+
+  // $삼일후 = $now + $day * 3;
+
+
+  echo $계약해지날;
+  echo '<br/>';
+  echo strtotime($계약해지날) + 1;
+
+  echo '<br/>';
+  echo time();
+
+});
