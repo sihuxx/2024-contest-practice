@@ -110,7 +110,6 @@ post("/tourApply", function () {
   if (db::fetch("select * from tours where admin_user = '$user->idx' and isAccept = 1 and isCompleted = 0")) back("이미 운영 중인 탐방이 있습니다.");
   if (db::fetch("select * from applys where user_idx = '$user->idx' and status = 0")) back("이미 신청 중인 탐방이 있습니다");
   if (db::fetch("select * from applys where user_idx = '$user->idx' and status = 1")) back("이미 가입된 탐방이 있습니다");
-  if (db::fetch("select * from applys where user_idx = '$user->idx' and tour_idx in (select idx from tours where festival = '$tour->festival')")) back("축제 당 하나의 탐방만 신청 가능합니다");
   db::exec("insert into applys(tour_idx, user_idx) values ('$tour_idx', '$user->idx')");
   move("/tour", "탐방에 신청을 완료했습니다");
 });

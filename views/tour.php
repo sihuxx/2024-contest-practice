@@ -1,5 +1,5 @@
 <?php
-$today = "2024-09-01";
+$today = date("Y-m-d");
 $festivals = db::fetchAll("select * from festivals where end_date >= '$today'");
 $tours = db::fetchAll("select * from tours where isAccept = 1");
 $user = ss();
