@@ -385,3 +385,9 @@ footer {background-color: #fe5417; border-top-right-radius: 45px; color: white;}
 .btns {display: flex;gap: 5px;}
 .accept-msg {color: #31881b;}
 .reject-msg {color: #ff2e2e;}
+.tour-msg {display: flex;align-items: center;}
+.member-list {width: 1300px;display: flex;flex-direction: column;gap: 20px;}
+.member-profile {border: 1px solid #ccc; width: 100%;display: flex;justify-content: start;gap: 20px;padding: 20px;align-items: center;}
+.member-profile img {width: 100px;height: 100px;}
+.member-profile .member-info {display: flex;flex-direction: column;gap: 5px;}
+.member-profile .member-info span {font-size: 14px;padding: 5px 10px;background-color: #fe5417;color: white;font-weight: bold;border-radius: 30px;}

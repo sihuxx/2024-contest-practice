@@ -68,6 +68,9 @@ get("/logout", function () {
 post("/addTour", function () {
   extract($_POST);
   $user = ss();
+  if (!$user) back("로그인 후 이용할 수 있는 기능입니다");
+  if (db::fetch("select * from tours where admin_user = '$user->idx' and isAccept = 1 and isCompleted = 0")) back("이미 운영 중인 탐방이 있습니다");
+  if (db::fetch("select * from members where user_idx = '$user->idx' and status = 1")) back("이미 가입된 탐방이 있습니다");
   db::exec("insert into tours(title, festival, date, max_people, admin_user) values ('$title', '$festival', '$date', '$max_people', '$user->idx')");
   move("/tour", "탐방이 성공적으로 신청되었습니다");
 });
@@ -99,13 +102,16 @@ post("/tourReject", function () {
 });
 post("/tourApply", function () {
   extract($_POST);
+  $user = ss();
+  if (!$user) back("로그인 후 이용할 수 있는 기능입니다");
   $tour = db::fetch("select * from tours where idx = '$tour_idx'");
-  if (!ss()) back("로그인 후 이용할 수 있는 기능입니다");
-  if(db::fetch("select * from recruits where user_idx = 'ss()->idx' and tour_idx = '$tour->idx'")) back("이미 신청한 탐방입니다");
-  if($tour->admin_user == ss()->idx) back("해당 탐방 운영자는 가입 신청이 불가능합니다");
-  if (db::fetch("select * from recruits where user_idx = 'ss()->idx' and tour_idx in (select idx from tours where festival = '$tour->festival')")) back("축제 당 하나의 탐방만 신청 가능합니다");
   if (date("Y-m-d") >= $tour->date) back("이미 진행중입니다");
-  db::exec("insert into recruits(tour_idx, user_idx) values ('$tour_idx', 'ss()->idx')");
+  if ($tour->admin_user == $user->idx) back("해당 탐방 운영자는 가입 신청이 불가능합니다");
+  if (db::fetch("select * from tours where admin_user = '$user->idx' and isAccept = 1 and isCompleted = 0")) back("이미 운영 중인 탐방이 있습니다.");
+  if (db::fetch("select * from members where user_idx = '$user->idx' and status = 0")) back("이미 신청 중인 탐방이 있습니다");
+  if (db::fetch("select * from members where user_idx = '$user->idx' and status = 1")) back("이미 가입된 탐방이 있습니다");
+  if (db::fetch("select * from members where user_idx = '$user->idx' and tour_idx in (select idx from tours where festival = '$tour->festival')")) back("축제 당 하나의 탐방만 신청 가능합니다");
+  db::exec("insert into members(tour_idx, user_idx) values ('$tour_idx', '$user->idx')");
   move("/tour", "탐방에 신청을 완료했습니다");
 });
 

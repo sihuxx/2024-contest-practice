@@ -23,14 +23,14 @@ $tours = db::fetchAll("select * from tours where festival = '$festival->idx' and
   <div class="tour-list">
     <?php foreach ($tours as $tour) {
       $tour_user = db::fetch("select * from users where idx = '$tour->admin_user'");
-      $tour_recruits = db::fetchAll("select * from recruits where tour_idx = '$tour->idx' and status = 1");
+      $tour_members = db::fetchAll("select * from members where tour_idx = '$tour->idx' and status = 1");
       $festival = db::fetch("select * from festivals where idx = '$tour->festival'")
     ?>
       <div class="tour" style="cursor: pointer;">
         <div class="tour-info">
           <p class="bold"><?= $tour->title ?></p>
           <p>탐방 날짜: <?= $tour->date ?></p>
-          <p>모집 인원: <?= count($tour_recruits) + 1 ?>/<?= $tour->max_people ?></p>
+          <p>모집 인원: <?= count($tour_members) + 1 ?>/<?= $tour->max_people ?></p>
           <form method="POST" class="btns">
             <input type="hidden" name="tour_idx" value="<?= $tour->idx ?>">
             <button formaction="/tourApply">가입 신청</button>

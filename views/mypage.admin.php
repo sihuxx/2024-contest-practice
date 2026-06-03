@@ -1,7 +1,7 @@
 <?php
 $user = ss();
 $festivals = db::fetchAll("select * from festivals order by end_date desc");
-$tours = db::fetchAll("select * from tours ");
+$tours = db::fetchAll("select * from tours");
 ?>
 
 <main class="myPage-content">
