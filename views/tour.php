@@ -1,7 +1,7 @@
 <?php
 $today = "2024-09-01";
 $festivals = db::fetchAll("select * from festivals where end_date >= '$today'");
-$tours = db::fetchAll("select * from tours where status = 1");
+$tours = db::fetchAll("select * from tours where isAccept = 1");
 $user = ss();
 ?>
 
@@ -12,7 +12,7 @@ $user = ss();
     <button onclick="controlModal()">탐방 모집</button>
     <div class="tour-list">
         <?php foreach ($tours as $tour) {
-            $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'");
+            $tour_user = db::fetch("select * from users where idx = '$tour->admin_user'");
             $tour_recruits = db::fetchAll("select * from recruits where tour_idx = '$tour->idx' and status = 1");
             $festival = db::fetch("select * from festivals where idx = '$tour->festival'")
         ?>
@@ -24,7 +24,6 @@ $user = ss();
                     <p>모집 인원: <?= count($tour_recruits) + 1 ?>/<?= $tour->max_people ?></p>
                     <form method="POST" class="btns">
                         <input type="hidden" name="tour_idx" value="<?= $tour->idx ?>">
-                        <input type="hidden" name="user_idx" value="<?= $user->idx ?? "" ?>">
                         <button formaction="/tourApply">가입 신청</button>
                     </form>
                 </div>
@@ -41,26 +40,42 @@ $user = ss();
             </div>
         <?php } ?>
     </div>
-    <div class="default-modal">
-        <div class="default-modal-header">
-            <button onclick="controlModal()">닫기</button>
+    <div class="title-text">
+        <h1>탐방 후기</h1>
+    </div>
+    <div class="review-list">
+        <div class="review">
+            <?php foreach ($tours as $tour) { ?>
+                <img src="">
+                <div class="review-info">
+                    <h1></h1>
+                    <p>탐방 축제:</p>
+                    <p>모집된 인원:</p>
+                    <p>평균 별점:</p>
+                </div>
+            <?php } ?>
         </div>
-        <form action="/addTour" method="post">
-            <input type="hidden" name="user_idx" value="<?= $user->idx ?>">
-            <label>탐방 축제:
-                <select name="festival" onchange="festivalChange()">
-                    <?php foreach ($festivals as $festival) { ?>
-                        <option value="<?= $festival->idx ?>"><?= $festival->name ?></option>
-                    <?php } ?>
-                </select>
-            </label>
-            <label>탐방 제목: <input type="text" name="title" placeholder="탐방 제목을 입력해주세요" required></label>
-            <label>탐방 날짜: <input type="date" name="date" placeholder="탐방 날짜를 입력해주세요" required></label>
-            <label>최대 모집 인원: <input type="number" min="2" name="max_people" placeholder="최대 모집 인원을 입력해주세요" required></label>
-            <button>모집하기</button>
-        </form>
     </div>
 </main>
+
+<div class="default-modal">
+    <div class="default-modal-header">
+        <button onclick="controlModal()">닫기</button>
+    </div>
+    <form action="/addTour" method="post">
+        <label>탐방 축제:
+            <select name="festival" onchange="festivalChange()">
+                <?php foreach ($festivals as $festival) { ?>
+                    <option value="<?= $festival->idx ?>"><?= $festival->name ?></option>
+                <?php } ?>
+            </select>
+        </label>
+        <label>탐방 제목: <input type="text" name="title" placeholder="탐방 제목을 입력해주세요" required></label>
+        <label>탐방 날짜: <input type="date" name="date" placeholder="탐방 날짜를 입력해주세요" required></label>
+        <label>최대 모집 인원: <input type="number" min="2" name="max_people" placeholder="최대 모집 인원을 입력해주세요" required></label>
+        <button>모집하기</button>
+    </form>
+</div>
 
 <script>
     const $ = e => document.querySelector(e)

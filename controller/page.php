@@ -15,8 +15,9 @@ get("/progress", function () {
 get("/sub", function () {
   views("sub");
 });
-get("/myPage", function () {
-  views("myPage");
+get("/mypage", function () {
+  if (ss() && ss()->id === 'admin') views("mypage.admin");
+  else if (ss()) views("mypage.basic");
 });
 get("/festivals", function () {
   views("festival/festivals");
@@ -66,8 +67,9 @@ get("/logout", function () {
 });
 post("/addTour", function () {
   extract($_POST);
-  db::exec("insert into tours(title, festival, date, max_people, people, user_idx) values ('$title', '$festival', '$date', '$max_people', 1, '$user_idx')");
-  move("/tour", "탐방이 성공적으로 모집되었습니다");
+  $user = ss();
+  db::exec("insert into tours(title, festival, date, max_people, admin_user) values ('$title', '$festival', '$date', '$max_people', '$user->idx')");
+  move("/tour", "탐방이 성공적으로 신청되었습니다");
 });
 post('/addFestival', function () {
   extract($_POST);
@@ -75,7 +77,7 @@ post('/addFestival', function () {
   $path = '/assets/festivals/' . $file["name"];
   if (isset($file["tmp_name"]) && move_uploaded_file($file["tmp_name"], ".$path")) {
     db::exec("insert into festivals(image, name, start_date, end_date, address) values ('$path', '$name', '$start_date', '$end_date', '$address')");
-    move("/myPage", "축제가 성공적으로 추가되었습니다");
+    move("/mypage", "축제가 성공적으로 추가되었습니다");
   } else {
     back("축제 추가에 실패하였습니다");
   }
@@ -87,30 +89,28 @@ post("/tourAccept", function () {
     db::exec("delete from tours where idx = '$idx'");
     back("이미 날짜가 지난 탐방입니다");
   }
-  db::exec("update tours set status = 1 where idx = '$idx'");
-  move("/myPage", "탐방이 수락되었습니다");
+  db::exec("update tours set isAccept = 1 where idx = '$idx'");
+  move("/mypage", "탐방이 수락되었습니다");
 });
 post("/tourReject", function () {
   extract($_POST);
-  db::exec("delete from tours where idx = '$idx'");
-  move("/myPage", "탐방이 거절되었습니다");
+  db::exec("update tours set isAccept = 0 where idx = '$idx'");
+  move("/mypage", "탐방이 거절되었습니다");
 });
 post("/tourApply", function () {
   extract($_POST);
-  $user = ss();
   $tour = db::fetch("select * from tours where idx = '$tour_idx'");
-  if (!$user) back("로그인 후 이용할 수 있는 기능입니다");
-  if(db::fetch("select * from recruits where tour_idx = '$tour_idx'")) back("축제 당 하나의 탐방만 신청 가능합니다");
-  if (db::fetch("select * from recruits where user_idx = '$user_idx' and tour_idx = '$tour_idx'")) back("이미 신청한 탐방입니다");
-  if(date("Y-m-d") >= $tour->date) back("이미 진행중입니다");
-  db::exec("insert into recruits(tour_idx, user_idx) values ('$tour_idx', '$user_idx')");
+  if (!ss()) back("로그인 후 이용할 수 있는 기능입니다");
+  if(db::fetch("select * from recruits where user_idx = 'ss()->idx' and tour_idx = '$tour->idx'")) back("이미 신청한 탐방입니다");
+  if($tour->admin_user == ss()->idx) back("해당 탐방 운영자는 가입 신청이 불가능합니다");
+  if (db::fetch("select * from recruits where user_idx = 'ss()->idx' and tour_idx in (select idx from tours where festival = '$tour->festival')")) back("축제 당 하나의 탐방만 신청 가능합니다");
+  if (date("Y-m-d") >= $tour->date) back("이미 진행중입니다");
+  db::exec("insert into recruits(tour_idx, user_idx) values ('$tour_idx', 'ss()->idx')");
   move("/tour", "탐방에 신청을 완료했습니다");
 });
 
 
-get('/test', function(){
-
-
+get('/test', function () {
   // '2026-06-2'
   // Y-m-d H:i:s
   $계약해지날 = '2025-12-01 00:00:01';
@@ -119,8 +119,6 @@ get('/test', function(){
   $minute = $second * 60;
   $hour = $minute * 60;
   $day = $hour * 24;
-
-
 
   $startTime = '2026-06-02 19:00:00';
   $endTime = '2026-06-02 21:00:00';
@@ -132,12 +130,11 @@ get('/test', function(){
 
   $now = time();
 
-  
   // $inputStartTime < $otherReservationStartTime && $inputStartTime > $otherReservationEndTime
   // ||
   // $inputStartTime < $otherReservationStartTime && $inputStartTime > $otherReservationEndTime
 
-  
+
   // if () {
   //   echo "예약 가능";
   // } else {
@@ -151,12 +148,10 @@ get('/test', function(){
 
   // $삼일후 = $now + $day * 3;
 
-
   echo $계약해지날;
   echo '<br/>';
   echo strtotime($계약해지날) + 1;
 
   echo '<br/>';
   echo time();
-
 });

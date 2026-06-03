@@ -4,7 +4,7 @@ if (!$user) {
   back("로그인한 회원만 접근 가능한 페이지입니다");
 }
 $festival = db::fetch("select * from festivals where idx = '$idx'");
-$tours = db::fetchAll("select * from tours where festival = '$festival->idx'")
+$tours = db::fetchAll("select * from tours where festival = '$festival->idx' and isAccept = 1")
 ?>
 
 <main class="festival-content">
@@ -22,7 +22,7 @@ $tours = db::fetchAll("select * from tours where festival = '$festival->idx'")
   </div>
   <div class="tour-list">
     <?php foreach ($tours as $tour) {
-      $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'");
+      $tour_user = db::fetch("select * from users where idx = '$tour->admin_user'");
       $tour_recruits = db::fetchAll("select * from recruits where tour_idx = '$tour->idx' and status = 1");
       $festival = db::fetch("select * from festivals where idx = '$tour->festival'")
     ?>
@@ -33,7 +33,6 @@ $tours = db::fetchAll("select * from tours where festival = '$festival->idx'")
           <p>모집 인원: <?= count($tour_recruits) + 1 ?>/<?= $tour->max_people ?></p>
           <form method="POST" class="btns">
             <input type="hidden" name="tour_idx" value="<?= $tour->idx ?>">
-            <input type="hidden" name="user_idx" value="<?= $user->idx ?>">
             <button formaction="/tourApply">가입 신청</button>
           </form>
         </div>

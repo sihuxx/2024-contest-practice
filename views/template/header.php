@@ -31,7 +31,7 @@
 
         <div class="flex c gap-3">
           <?php if($user) { ?>
-            <a href="/myPage" class="b bg-gradient"><span>마이페이지</span></a>
+            <a href="/mypage" class="b bg-gradient"><span>마이페이지</span></a>
             <a href="/logout" class="b bg-gradient"><span>로그아웃</span></a>
           <?php } else { ?>
           <a href="/login" class="b bg-gradient"><span>로그인</span></a>

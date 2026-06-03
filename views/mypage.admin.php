@@ -31,7 +31,7 @@ $tours = db::fetchAll("select * from tours ");
       </div>
       <div class="tour-list">
         <?php foreach ($tours as $tour) {
-          $tour_user = db::fetch("select * from users where idx = '$tour->user_idx'"); 
+          $tour_user = db::fetch("select * from users where idx = '$tour->admin_user'"); 
           $festival = db::fetch("select * from festivals where idx = '$tour->festival'");
           ?>
           <div class="tour">
@@ -40,20 +40,19 @@ $tours = db::fetchAll("select * from tours ");
               <p>탐방할 축제: <?= $festival->name ?></p>
               <p>탐방 날짜: <?= $tour->date ?></p>
               <p>최대 모집 인원: <?= $tour->max_people ?>명</p>
-              <?php if($tour->status == 0) { ?>
+              <?php if($tour->isAccept === null) { ?>
                 <form method="POST" class="btns">
                 <input type="hidden" name="idx" value="<?= $tour->idx ?>">
                 <button formaction="/tourAccept">수락</button>
                 <button formaction="/tourReject">거절</button>
               </form>
-              <?php } else if($tour->status == 1) { ?>
-                <?php if($tour->isAccept == 1) { ?>
-                  <p class="accept-msg">수락되었습니다.</p>
-                <?php } else { ?>
-                  <p class="reject-msg">거절되었습니다.</p>
-                <?php } ?>
-              <?php } else if(date("Y-m-d") > $tour->date) { ?>
-              <p>탐방이 완료되었습니다</p>
+              <?php } else  { ?>
+              <p class="<?= $tour->isAccept === 1 ? 'accept-msg' : 'reject-msg' ?>">
+                    <?php if(date("Y-m-d") > $tour->date): ?> 탐방이 완료되었습니다.
+                    <?php elseif($tour->isAccept === 1): ?> 수락되었습니다.
+                    <?php elseif($tour->isAccept === 0): ?> 거절되었습니다. 
+                    <?php endif ?>
+                  </p>
               <?php } ?>
             </div>
             <div class="profile">
