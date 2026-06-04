@@ -3,7 +3,6 @@ $user = ss();
 $isManager = db::fetch("select * from tours where admin_user = '$user->idx' and isAccept = 1 and isCompleted = 0");
 $isMember = db::fetch("select a.* from applys a inner join tours t on a.tour_idx = t.idx where a.user_idx = '$user->idx' and a.status = 1 and t.isCompleted = 0");
 $completeTours = db::fetchAll("select t.*, r.idx as review_idx from tours t left join reviews r on t.idx = r.tour_idx and r.user_idx = '$user->idx' where (t.admin_user = '$user->idx' or t.idx in (select tour_idx from applys where user_idx = '$user->idx' and status = 1)) and t.isCompleted = 1 group by t.idx order by t.date desc");
-
 ?>
 <?php foreach ($completeTours as $tour) { ?>
   <?= $tour->idx ?> / <?= $tour->review_idx ?> <br>

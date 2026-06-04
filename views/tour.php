@@ -1,7 +1,7 @@
 <?php
 $today = date("Y-m-d");
 $festivals = db::fetchAll("select * from festivals where end_date >= '$today'");
-$tours = db::fetchAll("select * from tours where isAccept = 1");
+$tours = db::fetchAll("select * from tours where isAccept = 1 and isCompleted = 0");
 $user = ss();
 $reviewTours = db::fetchAll("select t.*, ROUND(AVG(r.rating), 1) as avg_rating from tours t inner join reviews r on t.idx = r.tour_idx where t.isCompleted = 1 group by t.idx order by t.date desc")
 ?>
@@ -16,7 +16,7 @@ $reviewTours = db::fetchAll("select t.*, ROUND(AVG(r.rating), 1) as avg_rating f
             $tour_user = db::fetch("select * from users where idx = '$tour->admin_user'");
             $tour_members = db::fetchAll("select * from applys where tour_idx = '$tour->idx' and status = 1");
             $festival = db::fetch("select * from festivals where idx = '$tour->festival'")
-        ?>
+            ?>
             <div class="tour" onclick="location.href = '/festival/<?= $tour->festival ?>'" style="cursor: pointer;">
                 <div class="tour-info">
                     <p class="bold"><?= $tour->title ?></p>
@@ -39,19 +39,20 @@ $reviewTours = db::fetchAll("select t.*, ROUND(AVG(r.rating), 1) as avg_rating f
                     </div>
                 </div>
             </div>
-        <?php } ?>
-    </div>
-    <div class="title-text">
-        <h1>탐방 후기</h1>
-    </div>
-    <div class="review-list">
-        <div class="tour-list">
-           <?php foreach($reviewTours as $tour) { 
-            $tour_member = db::fetchAll("select * from applys where tour_idx = '$tour->idx'");
-            ?>
+            <?php } ?>
+        </div>
+        <div class="title-text">
+            <h1>탐방 후기</h1>
+        </div>
+        <div class="review-list">
+            <div class="tour-list">
+                <?php foreach($reviewTours as $tour) { 
+                    $tour_member = db::fetchAll("select * from applys where tour_idx = '$tour->idx'");
+                    $festival = db::fetch("select * from festivals where idx = '$tour->festival'");
+                    ?>
              <div class="tour" style="cursor: pointer;" onclick="location.href = '/review/<?= $tour->idx ?>'">
-                <img src="<?= $festival->image ?>">
-                <div class="tour-info">
+                 <img src="<?= $festival->image ?>">
+                 <div class="tour-info">
                     <p class="bold"><?= $tour->title ?></p>
                     <p>탐방 축제: <?= $festival->name ?></p>
                     <p>모집된 인원: <?= count($tour_member) + 1 ?>명</p>

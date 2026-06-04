@@ -31,6 +31,9 @@ get("/login", function () {
 get("/tour", function () {
   views("tour");
 });
+get('/review/{idx}', function ($idx) {
+  views("review", ["idx" => $idx]);
+});
 get("/register", function () {
   views("/auth/register");
 });

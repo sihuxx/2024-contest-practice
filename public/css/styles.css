@@ -396,4 +396,12 @@ footer {background-color: #fe5417; border-top-right-radius: 45px; color: white;}
 .review-list .tour img {width: 300px;}
 .review-list .tour {justify-content: start;}
 .review-list p {align-items: center;display: flex;gap: 10px;}
-.admin-tag {font-size: 12px;padding: 5px 10px;background-color: #fe5417;color: white;font-weight: bold;border-radius: 30px;}
+.admin-tag {margin-bottom: 10px;font-size: 12px;padding: 5px 10px;background-color: #fe5417;color: white;font-weight: bold;border-radius: 30px;}
+
+/* 후기 상세 */
+.review-content {padding: 100px 0;width: 100%;display: flex;justify-content: center;align-items: center;flex-direction: column;gap: 20px;}
+.tour-title {width: 1300px;display: flex;flex-direction: column;gap: 15px;padding: 20px;border: 1px solid #ccc;}
+.review-profile {align-items: center; display: flex;gap: 10px;}
+.review-list {display: flex;flex-direction: column;}
+.review-list .review {border: 1px solid #ccc;padding: 10px; gap: 5px;display: flex;flex-direction: column;justify-content: center;align-items: start;}
+.review-list .review img {width: 80px;height: 80px;border-radius: 50%;}
