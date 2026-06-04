@@ -3,6 +3,7 @@ $today = date("Y-m-d");
 $festivals = db::fetchAll("select * from festivals where end_date >= '$today'");
 $tours = db::fetchAll("select * from tours where isAccept = 1");
 $user = ss();
+$reviewTours = db::fetchAll("select t.*, ROUND(AVG(r.rating), 1) as avg_rating from tours t inner join reviews r on t.idx = r.tour_idx where t.isCompleted = 1 group by t.idx order by t.date desc")
 ?>
 
 <main class="tour-content">
@@ -44,16 +45,20 @@ $user = ss();
         <h1>탐방 후기</h1>
     </div>
     <div class="review-list">
-        <div class="review">
-            <?php foreach ($tours as $tour) { ?>
-                <img src="">
-                <div class="review-info">
-                    <h1></h1>
-                    <p>탐방 축제:</p>
-                    <p>모집된 인원:</p>
-                    <p>평균 별점:</p>
+        <div class="tour-list">
+           <?php foreach($reviewTours as $tour) { 
+            $tour_member = db::fetchAll("select * from applys where tour_idx = '$tour->idx'");
+            ?>
+             <div class="tour" style="cursor: pointer;" onclick="location.href = '/review/<?= $tour->idx ?>'">
+                <img src="<?= $festival->image ?>">
+                <div class="tour-info">
+                    <p class="bold"><?= $tour->title ?></p>
+                    <p>탐방 축제: <?= $festival->name ?></p>
+                    <p>모집된 인원: <?= count($tour_member) + 1 ?>명</p>
+                    <p>평균 별점: <?= $tour->avg_rating ?>점</p>
                 </div>
-            <?php } ?>
+            </div>
+           <?php } ?>
         </div>
     </div>
 </main>
