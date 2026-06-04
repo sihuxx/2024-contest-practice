@@ -14,8 +14,8 @@ $tours = db::fetchAll("select * from tours where festival = '$festival->idx' and
   <div class="detail-content">
     <img src="<?= $festival->image ?>">
     <p class="bold"><?= $festival->name ?></p>
-    <p>축제 기간:<?= $festival->start_date ?> ~ <?= $festival->end_date ?></p>
-    <p>축제 장소:<?= $festival->address ?></p>
+    <p>축제 기간: <?= $festival->start_date ?> ~ <?= $festival->end_date ?></p>
+    <p>축제 장소: <?= $festival->address ?></p>
   </div>
   <div class="title-text">
     <h1>축제 탐방 목록</h1>
@@ -36,7 +36,7 @@ $tours = db::fetchAll("select * from tours where festival = '$festival->idx' and
             <button formaction="/tourApply">가입 신청</button>
           </form>
         </div>
-        <div class="profile">
+        <div class="profile" onclick="window.open('/profile/<?= $tour_user->idx ?>', '_blank', 'width=400,height=600')">
           탐방 운영자:
           <div class="profile-info">
             <img src="<?= $tour_user->profile ?>">
