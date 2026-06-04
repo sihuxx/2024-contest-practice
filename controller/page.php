@@ -114,12 +114,12 @@ post("/tourApply", function () {
   move("/tour", "탐방에 신청을 완료했습니다");
 });
 post("/applyAccept", function () {
-  extract($_POST); 
+  extract($_POST);
   $tour = db::fetch("select * from tours where idx = '$tour_idx'");
   db::exec("update applys set status = 1 where user_idx = '$user_idx' and tour_idx = '$tour_idx'");
 
   $tour_member = db::fetchAll("select * from applys where tour_idx = '$tour_idx' and status = 1");
-  if(count($tour_member) + 1 >= $tour->max_people || date("Y-m-d") >= $tour->date) {
+  if (count($tour_member) + 1 >= $tour->max_people || date("Y-m-d") >= $tour->date) {
     db::exec("delete from applys where tour_idx = '$tour_idx' and status = 0");
   }
   move("/mypage", "탐방 신청을 수락하였습니다");
@@ -128,6 +128,25 @@ post("/applyReject", function () {
   extract($_POST);
   db::exec("delete from applys where user_idx = '$user_idx' and tour_idx = '$tour_idx'");
   move("/mypage", "탐방 신청을 거절하였습니다");
+});
+post("/addAdminReview", function () {
+  extract($_POST);
+  $user = ss();
+  db::exec("insert into reviews(rating, content, tour_idx, user_idx, is_admin_review) values ('$rating', '$content', '$tour_idx', '$user->idx', 1)");
+  db::exec("update tours set isCompleted = 1 where idx = '$tour_idx'");
+  foreach ($member_rating as $target_idx => $target_rating) {
+    db::exec("insert into member_ratings(target_user_idx, rating, tour_idx) values ('$target_idx', '$target_rating', '$tour_idx')");
+  }
+  move("/mypage", "탐방을 완료하였습니다");
+});
+post('/addReview', function () {
+  extract($_POST);
+  $user = ss();
+  db::exec("insert into reviews(rating, content, tour_idx, user_idx) values ('$rating', '$content', '$tour_idx', '$user->idx')");
+  foreach ($member_rating as $target_idx => $target_rating) {
+    db::exec("insert into member_ratings(target_user_idx, rating, tour_idx) values ('$target_idx', '$target_rating', '$tour_idx')");
+  }
+  move("/mypage", "후기가 등록되었습니다");
 });
 
 get('/test', function () {

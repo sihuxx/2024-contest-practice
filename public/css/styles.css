@@ -368,6 +368,7 @@ footer {background-color: #fe5417; border-top-right-radius: 45px; color: white;}
 .default-modal input, .default-modal select {width: 400px;padding: 5px;}
 .default-modal label {display: flex;flex-direction: column;}
 .default-modal-header {width: 100%;display: flex;justify-content: end;align-items: center;}
+.default-modal button {z-index: 10;}
  button{padding: 5px 10px;border: 1px solid black;}
 .default-modal.toggle {display: flex !important;}
 
@@ -391,3 +392,8 @@ footer {background-color: #fe5417; border-top-right-radius: 45px; color: white;}
 .member-profile img {width: 100px;height: 100px;}
 .member-profile .member-info {display: flex;flex-direction: column;gap: 5px;}
 .member-profile .member-info span {font-size: 14px;padding: 5px 10px;background-color: #fe5417;color: white;font-weight: bold;border-radius: 30px;}
+.review-list {width: 1300px;display: flex;flex-direction: column;gap: 20px;}
+.review-list .tour img {width: 300px;}
+.review-list .tour {justify-content: start;}
+.review-list p {align-items: center;display: flex;gap: 10px;}
+.admin-tag {font-size: 12px;padding: 5px 10px;background-color: #fe5417;color: white;font-weight: bold;border-radius: 30px;}
