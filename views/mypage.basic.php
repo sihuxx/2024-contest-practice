@@ -19,7 +19,11 @@ $completeTours = db::fetchAll("select t.*, r.idx as review_idx from tours t left
       $tour = $isManager ?: db::fetch("select * from tours where idx = '$isMember->tour_idx'");
       $tour_members = db::fetchAll("select a.*, u.name, u.id, u.profile from applys a inner join users u on u.idx = a.user_idx where a.status = 1 and a.tour_idx = '$tour->idx'");
       $festival = db::fetch("select * from festivals where idx = '$tour->festival'");
+
       $admin_user = db::fetch("select * from users where idx = '$tour->admin_user'");
+      $admin_rating = db::fetch("select ROUND(AVG(rating), 1) rating from member_ratings where target_user_idx = '$admin_user->idx'");
+      $admin_complete = db::fetchAll("select t.idx, a.* from tours t inner join applys a on t.idx = a.tour_idx where a.user_idx = '$admin_user->idx' and a.status = 1 and t.isCompleted = 1");
+      $admin_admin = db::fetchAll("select * from tours where admin_user = '$admin_user->idx' and isCompleted = 1");
     ?>
       <div class="tour" onclick="location.href = '/festival/<?= $tour->festival ?>'" style="cursor: pointer;">
         <div class="tour-info">
@@ -57,7 +61,7 @@ $completeTours = db::fetchAll("select t.*, r.idx as review_idx from tours t left
     <div class="title-text">
       <h1>멤버 목록</h1>
     </div>
-    <div class="member-profile">
+    <div class="member-profile" onclick="document.querySelector('.profile-modal').style.display = 'flex'">
       <img src="<?= $admin_user->profile ?>">
       <div class="member-info">
         <span>탐방 운영자</span>
@@ -65,12 +69,55 @@ $completeTours = db::fetchAll("select t.*, r.idx as review_idx from tours t left
         <p><?= $admin_user->id ?></p>
       </div>
     </div>
-    <?php foreach ($tour_members as $member) { ?>
-      <div class="member-profile">
+
+    <div class="default-modal profile-modal">
+      <div class="profile-header">
+        <button onclick="document.querySelector('.profile-modal').style.display = 'none'">닫기</button>
+      </div>
+      <div class="profile-con">
+        <div class="profile-info">
+          <img class="profile-img" src="<?= $admin_user->profile ?>">
+          <h3><?= $admin_user->name ?></h3>
+          <p><?= $admin_user->id ?></p>
+        </div>
+        <div class="profile-info">
+          <p>생년월일: <?= $admin_user->birth ?></p>
+          <p>평점: <?= $admin_rating->rating ?></p>
+          <p>탐방 운영 횟수: <?= count($admin_complete) + count($admin_admin) ?>회</p>
+          <p>탐방 완료 횟수: <?= count($admin_admin) ?>회</p>
+        </div>
+      </div>
+    </div>
+
+    <?php foreach ($tour_members as $member) {
+        $member_rating = db::fetch("select ROUND(AVG(rating), 1) rating from member_ratings where target_user_idx = '$member->idx'");
+        $member_complete = db::fetchAll("select t.idx, a.* from tours t inner join applys a on t.idx = a.tour_idx where a.user_idx = '$member->idx' and a.status = 1 and t.isCompleted = 1");
+        $member_admin = db::fetchAll("select * from tours where admin_user = '$member->idx' and isCompleted = 1");
+    ?>
+      <div class="member-profile" onclick="document.querySelector('.profile-modal').style.display = 'flex'">
         <img src="<?= $member->profile ?>">
         <div class="member-info">
           <h3><?= $member->name ?></h3>
           <p><?= $member->id ?></p>
+        </div>
+      </div>
+
+      <div class="default-modal profile-modal">
+        <div class="profile-header">
+          <button onclick="document.querySelector('.profile-modal').style.display = 'none'">닫기</button>
+        </div>
+        <div class="profile-con">
+          <div class="profile-info">
+            <img class="profile-img" src="<?= $member->profile ?>">
+            <h3><?= $member->name ?></h3>
+            <p><?= $member->id ?></p>
+          </div>
+          <div class="profile-info">
+            <p>생년월일: <?= $member->birth ?></p>
+            <p>평점: <?= $member_rating->rating ?></p>
+            <p>탐방 운영 횟수: <?= count($member_complete) + count($member_admin) ?>회</p>
+            <p>탐방 완료 횟수: <?= count($member_admin) ?>회</p>
+          </div>
         </div>
       </div>
     <?php } ?>
@@ -82,8 +129,12 @@ $completeTours = db::fetchAll("select t.*, r.idx as review_idx from tours t left
       <div class="title-text">
         <h1>신청 목록</h1>
       </div>
-      <?php foreach ($apply_members as $member) { ?>
-        <div class="member-profile">
+      <?php foreach ($apply_members as $member) {
+          $member_rating = db::fetch("select ROUND(AVG(rating), 1) rating from member_ratings where target_user_idx = '$member->idx'");
+          $member_complete = db::fetchAll("select t.idx, a.* from tours t inner join applys a on t.idx = a.tour_idx where a.user_idx = '$member->idx' and a.status = 1 and t.isCompleted = 1");
+          $member_admin = db::fetchAll("select * from tours where admin_user = '$member->idx' and isCompleted = 1");
+      ?>
+        <div class="member-profile" onclick="document.querySelector('.profile-modal').style.display = 'flex'">
           <img src="<?= $member->profile ?>">
           <div class="member-info">
             <h3><?= $member->name ?></h3>
@@ -94,6 +145,25 @@ $completeTours = db::fetchAll("select t.*, r.idx as review_idx from tours t left
               <button formaction="/applyAccept">수락</button>
               <button formaction="/applyReject">거절</button>
             </form>
+          </div>
+        </div>
+
+        <div class="default-modal profile-modal">
+          <div class="profile-header">
+            <button onclick="document.querySelector('.profile-modal').style.display = 'none'">닫기</button>
+          </div>
+          <div class="profile-con">
+            <div class="profile-info">
+              <img class="profile-img" src="<?= $member->profile ?>">
+              <h3><?= $member->name ?></h3>
+              <p><?= $member->id ?></p>
+            </div>
+            <div class="profile-info">
+              <p>생년월일: <?= $member->birth ?></p>
+              <p>평점: <?= $member_rating->rating ?></p>
+              <p>탐방 운영 횟수: <?= count($member_complete) + count($member_admin) ?>회</p>
+              <p>탐방 완료 횟수: <?= count($member_admin) ?>회</p>
+            </div>
           </div>
         </div>
       <?php } ?>

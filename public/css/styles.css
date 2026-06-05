@@ -405,3 +405,9 @@ footer {background-color: #fe5417; border-top-right-radius: 45px; color: white;}
 .review-list {display: flex;flex-direction: column;}
 .review-list .review {border: 1px solid #ccc;padding: 10px; gap: 5px;display: flex;flex-direction: column;justify-content: center;align-items: start;}
 .review-list .review img {width: 80px;height: 80px;border-radius: 50%;}
+
+/* 프로필 모달 */
+.profile-header {position: relative;width: 100%;}
+.profile-header button {position: absolute;right: 5px;top: 5px;}
+.profile-con {display: flex;align-items: center;gap: 50px;}
+.profile-img {width: 140px;height: 140px;border-radius: 50%;}
